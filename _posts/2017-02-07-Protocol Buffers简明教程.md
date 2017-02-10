@@ -17,6 +17,13 @@ link_title: learning_protobuf
 - 通过proto文件定义结构化数据，其他功能相似的比如XML、JSON等；
 - 自带代码生成器，支持多种语言；
 
+### 为什么叫“Protocol Buffers”？
+官方如是说：
+
+> The name originates from the early days of the format, before we had the protocol buffer compiler to generate classes for us. At the time, there was a class called ProtocolBuffer which actually acted as a buffer for an individual method. Users would add tag/value pairs to this buffer individually by calling methods like AddValue(tag, value). The raw bytes were stored in a buffer which could then be written out once the message had been constructed.
+
+> Since that time, the "buffers" part of the name has lost its meaning, but it is still the name we use. Today, people usually use the term "protocol message" to refer to a message in an abstract sense, "protocol buffer" to refer to a serialized copy of a message, and "protocol message object" to refer to an in-memory object representing the parsed message.
+
 ### 核心特点
 - 语言无关、平台无关
 - 简洁
