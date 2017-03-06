@@ -120,6 +120,11 @@ Java并发和Netty相关知识小结比预期的要花费更多时间，本月�
 - github：slightly-rpc（基于Netty和Protobuf自研简单的RPC）；
 - Java并发编程小结；Netty学习小结；
 
+## 更新年度计划
+更新说明：1. 时间太少，要学的太多，砍掉非核心部分；2. 后续微服务会以Spring Cloud为主，并在此基础上进行学习扩展。
+
+![年度小目标V20170306](http://oi46mo3on.bkt.clouddn.com/plan_for_2017_v4.png)
+
 # 3月份目标
 3月份作为第一个季度的结束，主题就是要把前面欠的债给还了。具体包括：
 
