@@ -106,10 +106,33 @@ Java并发和Netty相关知识小结比预期的要花费更多时间，本月�
 - 【10h】github：slightly-rpc（基于Netty和Protobuf自研简单的RPC）；
 
 # 2月份进展
-//还没轮到我呢...
+
+## 完成的
+- ~~精读《实战Java高并发程序设计》~~；
+- ~~阅读《Java并发编程实战》~~；
+- ~~精读《Netty权威指南》~~；
+- ~~阅读《Java 8实战》~~；
+- ~~阅读《数学之美》~~；
+- ~~博客写作：Protocol Buffers简明教程；word2vec学习小记；~~
+- ~~阅读随手记30篇~~；
+
+## 未完成的
+- github：slightly-rpc（基于Netty和Protobuf自研简单的RPC）；
+- Java并发编程小结；Netty学习小结；
 
 # 3月份目标
-//还没轮到我呢...
+3月份作为第一个季度的结束，主题就是要把前面欠的债给还了。具体包括：
+
+- 【6h】Elasticsearch的分析器学习与总结，对比常用的中文分词器；
+- 【4h】github：elasticsearch-dynamic-synonym（动态ES同义词插件）；
+- 【10h】github：slightly-rpc（基于Netty和Protobuf自研简单的RPC）；
+- 【2h】泛读《RabbitMQ实战》；
+- 【4h】阅读《深入理解Java7 : 核心技术与最佳实践》；
+- 【4h】阅读《微服务设计》；
+- 【5h】阅读《浪潮之巅》；
+- 【5h】阅读《算法的乐趣》；
+- 【10h】博客写作：Java并发编程之旅系列；
+- 【10h】阅读随手记30篇；
 
 # 3月份进展
 //还没轮到我呢...
