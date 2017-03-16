@@ -57,12 +57,6 @@ date: 2017-02-07 09:12:56
 3. Java 8的发布带来了很多实用的并发工具，希望在后续的版本中增加；
 4. 整体是一本好书，后面会再找时间再读一遍；
 
-**读书笔记**
-- [Java并发之旅第一站：显式锁](http://ginobefunny.com/post/java_concurrency_trip_part1/)
-- [Java并发之旅第二站：原子类与并发容器](http://ginobefunny.com/post/java_concurrency_trip_part2/)
-- [Java并发之旅第三站：线程池与Future模式](http://ginobefunny.com/post/java_concurrency_trip_part3/)
-- [Java并发之旅第四站：并行流](http://ginobefunny.com/post/java_concurrency_trip_part4/)
-
 ## B5 《实战Java高并发程序设计》
 
 ![实战Java高并发程序设计](https://img3.doubanio.com/lpic/s28339364.jpg)
@@ -76,12 +70,6 @@ date: 2017-02-07 09:12:56
 3. 关于Java并发的知识可以说是介绍得比较全面了，当前全面的话可能就没法真正的深入，比如ConcurrentHashMap基本上并发编程中最常用最经典的设计，但是书上介绍的非常少；同样的，Java 8中引入的CompletableFuture也是一个很重要的工具但是介绍的篇幅也非常有限；
 4. 对于Akka这一块，说实话我读了两遍，还是没有看得很懂，通过阅读官方的文档才比较清晰，感觉这一块写得有点混乱，条理不够清晰；
 5. 最终我还是给这本书四星，因为读后自己确实对并发这一块有了比较完整的认识，读后结合《深入理解Java虚拟机（第2版）》，从项目中的代码找到并相关部分并予以改进，梳理并发重点的知识（显式锁控制、并发容器、并发流），收获还是挺多的。
-
-**读书笔记**
-- [Java并发之旅第一站：显式锁](http://ginobefunny.com/post/java_concurrency_trip_part1/)
-- [Java并发之旅第二站：原子类与并发容器](http://ginobefunny.com/post/java_concurrency_trip_part2/)
-- [Java并发之旅第三站：线程池与Future模式](http://ginobefunny.com/post/java_concurrency_trip_part3/)
-- [Java并发之旅第四站：并行流](http://ginobefunny.com/post/java_concurrency_trip_part4/)
 
 ## B4 《软技能 : 代码之外的生存指南》
 
