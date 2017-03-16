@@ -6,7 +6,7 @@ categories: Elasticsearch
 link_title: elasticsearch_dynamic_synonym_plugin
 ---
 
-Elasticsearch自带了一个synonym同义词插件，但是该插件只能使用文件或在分析器中静态地配置同义词，如果需要添加或修改，需要修改配置文件和重启，使用方式不够友好。通过学习Elasticsearch的synonym代码，自研了一个可动态维护同义词的插件，并以运用于生成环境。
+Elasticsearch自带了一个synonym同义词插件，但是该插件只能使用文件或在分析器中静态地配置同义词，如果需要添加或修改，需要修改配置文件和重启，使用方式不够友好。通过学习Elasticsearch的synonym代码，自研了一个可动态维护同义词的插件，并以运用于生产环境，供大家参考。
 
 <!-- more -->
 
@@ -40,7 +40,7 @@ Elasticsearch自带的同义词过滤器支持在分析器配置（使用synonym
 
 
     // 精确映射同义词，【阿迪】、【阿迪达斯】和【adidasi】的token将会转换为【Adidas】存入倒排索引中
-    阿迪, 阿迪达斯=> Adidas
+    阿迪, 阿迪达斯, adidasi => Adidas
     
     // 对等同义词
     // 当expand为true时，当出现以下任何一个token，三个token都会存入倒排索引中
@@ -64,7 +64,7 @@ Elasticsearch自带的同义词过滤器支持在分析器配置（使用synonym
     
     mvn clean install -DskipTests
    
-3.在ES_HOME/plugin目录新建dynamic-synonym目录，并将target/releases/elasticsearch-dynamic-synonym-<version>.zip文件解压到该目录
+3.在ES_HOME/plugin目录新建dynamic-synonym目录，并将target/releases/elasticsearch-dynamic-synonym-\<version\>.zip文件解压到该目录
 
 4.在MySQL中创建Elasticsearch同义词数据库并创建用户
 

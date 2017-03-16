@@ -5,7 +5,7 @@ date: 2016-12-22 09:10:25
 ![关于我](http://oi46mo3on.bkt.clouddn.com/myself_3.jpg)
 
 ### 工作经历
-- 2016.6 至今：     YOHO!搜索组
+- 2016.6 至今：     YOHO!搜索组 
 - 2011.4 ~ 2016.6   华为RM PDU
 
 ### 教育经历
