@@ -79,12 +79,6 @@ link_title: search_recommendation_implemention_based_elasticsearch
             }
           }
         }
-      },
-      "settings": {
-        "index": {
-          "number_of_shards": 1,
-          "number_of_replicas": 0
-        }
       }
     }
         
@@ -118,12 +112,6 @@ link_title: search_recommendation_implemention_based_elasticsearch
             }
           }
         }
-      },
-      "settings": {
-        "index": {
-          "number_of_shards": 1,
-          "number_of_replicas": 0
-        }
       }
     }
 
@@ -144,12 +132,6 @@ link_title: search_recommendation_implemention_based_elasticsearch
               "index": "not_analyzed"
             }
           }
-        }
-      },
-      "settings": {
-        "index": {
-          "number_of_shards": 1,
-          "number_of_replicas": 0
         }
       }
     }
@@ -177,13 +159,13 @@ link_title: search_recommendation_implemention_based_elasticsearch
 1. 首先需要明确关键词的范围，这里我们采用的是suggest中类型为品牌、品类、风格、款式的词作为关键词；
 2. 关键词提取的核心步骤就是对爬虫内容和关键词分别分词，然后进行分词匹配，看该爬虫数据是否包含关键词的所有Term（如果就是一个Term就直接判断包含就好了）；在处理的时候还可以对匹配到关键词的次数进行排序，最终的结果就是一个key-value的映射，如{迪奥 -> [香水,香氛,时装,眼镜], 纪梵希 -> [香水,时装,彩妆,配饰,礼服]}；
 
-## 自定义关键词映射
+## 管理关键词映射
 1. 由于爬虫数据提取的关键词是和词条的内容相关联的，因此很有可能提取的关键词效果不大好，因此就需要人工管理；
 2. 管理动作主要是包括添加、修改和置失效关键词映射，然后增量地更新到conversion_index索引中；
 
 ## 搜索推荐服务的实现
 1. 首先如果对搜索推荐的入口进行判断，一些非法的情况不进行推荐（比如关键词太短或太长），另外由于搜索推荐并非核心功能，可以增加一个全局动态参数来控制是否进行搜索推荐；
-2. 在**设计思路**里面我们分析过可能有4中场景需要搜索推荐，如果高效、快速地找到具体的场景从而减少不必要的查询判断是推荐服务实现的关键；这个在设计的时候就需要综合权衡，我们通过一段时间的观察后，目前采用的逻辑的伪代码如下：
+2. 在**设计思路**里面我们分析过可能有4中场景需要搜索推荐，如何高效、快速地找到具体的场景从而减少不必要的查询判断是推荐服务实现的关键；这个在设计的时候就需要综合权衡，我们通过一段时间的观察后，目前采用的逻辑的伪代码如下：
 
 ```java
     public JSONObject recommend(SearchResult searchResult, String queryWord) {
@@ -195,7 +177,7 @@ link_title: search_recommendation_implemention_based_elasticsearch
             if (containsProductInSearchResult(searchResult)) {
                 // 1.1） 搜索有结果的 优先从搜索结果聚合出品牌等关键词进行查询
                 String aggKeywords = aggKeywordsByProductList(searchResult);
-                keywordsToSearch = keywordsToSearch + " " + aggKeywords;
+                keywordsToSearch = queryWord + " " + aggKeywords;
             } else if (isQuerySkn(queryWord)) {
                 // 1.2） 如果是查询SKN 没有查询到的 后续的逻辑也无法推荐 所以直接到ES里去获取关键词
                 keywordsToSearch = aggKeywordsBySkns(queryWord);
@@ -207,7 +189,7 @@ link_title: search_recommendation_implemention_based_elasticsearch
             Double count = searchKeyWordService.getKeywordCount(RedisKeys.SEARCH_KEYWORDS_EMPTY, queryWord);
             if (count == null || queryWord.length() >= 5) {
                 // 1.3) 如果该关键词一次都没有出现在空结果列表或者长度大于5 则该词很有可能是可以搜索出结果的
-    			//      因此优先取suggest_index去搜索一把 减少后面的查询动作
+                //      因此优先取suggest_index去搜索一把 减少后面的查询动作
                 JSONObject recommendResult = recommendBySuggestIndex(queryWord, keywordsToSearch, false);
                 if (isNotEmptyResult(recommendResult)) {
                     return recommendResult;
@@ -242,7 +224,7 @@ link_title: search_recommendation_implemention_based_elasticsearch
 - aggKeywordsBySkns方法是根据用户输入的SKN先到product_index索引获取商品列表，然后再调用aggKeywordsByProductList去获取品牌和品类的关键词列表；
 - getSuggestConversionDestBySource方法是查询conversion_index索引去获取关键词提取的结果，这里在调用recommendBySuggestIndex时有个参数，该参数主要是用于处理是否限制只能是输入的关键词；
 - getSpellingCorrectKeyword方法为拼写检查，在调用suggest_index处理时有个地方需要注意一下，拼写检查是基于编辑距离的，大小写不一致的情况会导致Elasticsearch Suggester无法得到正确的拼写建议，因此在处理时需要两边都转换为小写后进行拼写检查；
-- recommendBySuggestIndex方法主要有三个参数：第一个为原始用户输入，第二个为到ES进行查询的词，第三个参数表示是否限制必须为传入的关键词范围内。该方法核心的逻辑如下
+- 最终都需要调用recommendBySuggestIndex方法获取搜索推荐，因为通过suggest_index索引可以确保推荐出去的词是有意义的且关联到商品的。该方法核心逻辑的伪代码如下：
 
 
 ```java
@@ -250,7 +232,8 @@ link_title: search_recommendation_implemention_based_elasticsearch
         // 1) 先对keywordsToSearch进行分词
         List<String> terms = null;
         if (isLimitKeywords) {
-            terms = Arrays.stream(keywordsToSearch.split(",")).filter(term -> term != null && term.length() > 1).distinct().collect(Collectors.toList());
+            terms = Arrays.stream(keywordsToSearch.split(",")).filter(term -> term != null && term.length() > 1)
+                          .distinct().collect(Collectors.toList());
         } else {
             terms = searchAnalyzeService.getAnalyzeTerms(keywordsToSearch, "ik_smart");
         }
@@ -261,11 +244,12 @@ link_title: search_recommendation_implemention_based_elasticsearch
     
         // 2) 根据terms搜索构造搜索请求
         SearchParam searchParam = new SearchParam();
-    	searchParam.setPage(1);
+        searchParam.setPage(1);
         searchParam.setSize(3);
     
-    	// 2.1) 构建FunctionScoreQueryBuilder
-        QueryBuilder queryBuilder = isLimitKeywords ? buildQueryBuilderByLimit(terms) : buildQueryBuilder(keywordsToSearch, terms);
+        // 2.1) 构建FunctionScoreQueryBuilder
+        QueryBuilder queryBuilder = isLimitKeywords ? buildQueryBuilderByLimit(terms)
+                                      : buildQueryBuilder(keywordsToSearch, terms);
         searchParam.setQuery(queryBuilder);
         
         // 2.2) 设置过滤条件
@@ -273,7 +257,8 @@ link_title: search_recommendation_implemention_based_elasticsearch
         boolFilter.must(QueryBuilders.rangeQuery("count").gte(20));
         boolFilter.mustNot(QueryBuilders.termQuery("keyword.keyword_lowercase", srcQueryWord.toLowerCase()));
         if (isLimitKeywords) {
-            boolFilter.must(QueryBuilders.termsQuery("keyword.keyword_lowercase", terms.stream().map(String::toLowerCase).collect(Collectors.toList())));
+            boolFilter.must(QueryBuilders.termsQuery("keyword.keyword_lowercase", terms.stream()
+                .map(String::toLowerCase).collect(Collectors.toList())));
         }
         searchParam.setFiter(boolFilter);
     
@@ -296,14 +281,16 @@ link_title: search_recommendation_implemention_based_elasticsearch
     
         // 6) 构建结果加入缓存
         suggestResult = new JSONObject();
-        List<String> resultTerms = searchResult.getResultList().stream().map(map -> (String) map.get("keyword")).collect(Collectors.toList());
+        List<String> resultTerms = searchResult.getResultList().stream()
+                .map(map -> (String) map.get("keyword")).collect(Collectors.toList());
         suggestResult.put("search_recommendation", resultTerms);
         searchCacheService.addJSONObjectToCache(indexName, searchParam, suggestResult);
         return suggestResult;
     }
     
     private QueryBuilder buildQueryBuilderByLimit(List<String> terms) {
-        FunctionScoreQueryBuilder functionScoreQueryBuilder = new FunctionScoreQueryBuilder(QueryBuilders.matchAllQuery());
+        FunctionScoreQueryBuilder functionScoreQueryBuilder
+            = new FunctionScoreQueryBuilder(QueryBuilders.matchAllQuery());
     
         // 给品类类型的关键词加分
         functionScoreQueryBuilder.add(QueryBuilders.termQuery("type", Integer.valueOf(2)),
@@ -311,7 +298,8 @@ link_title: search_recommendation_implemention_based_elasticsearch
     
         // 按词出现的顺序加分
         for (int i = 0; i < terms.size(); i++) {
-            functionScoreQueryBuilder.add(QueryBuilders.termQuery("keyword.keyword_lowercase", terms.get(i).toLowerCase()),
+            functionScoreQueryBuilder.add(QueryBuilders.termQuery("keyword.keyword_lowercase", 
+			    terms.get(i).toLowerCase()),
                 ScoreFunctionBuilders.weightFactorFunction(terms.size() - i));
         }
     
@@ -322,13 +310,16 @@ link_title: search_recommendation_implemention_based_elasticsearch
     private QueryBuilder buildQueryBuilder(String keywordsToSearch, Set<String> termSet) {
         // 1) 对于suggest的multi-fields至少要有一个字段匹配到 匹配得分为常量1
         MultiMatchQueryBuilder queryBuilder = QueryBuilders.multiMatchQuery(keywordsToSearch.toLowerCase(),
-            "keyword.keyword_ik", "keyword.keyword_pinyin", "keyword.keyword_first_py", "keyword.keyword_lowercase")
+                "keyword.keyword_ik", "keyword.keyword_pinyin", 
+                "keyword.keyword_first_py", "keyword.keyword_lowercase")
             .analyzer("ik_smart")
             .type(MultiMatchQueryBuilder.Type.BEST_FIELDS)
             .operator(MatchQueryBuilder.Operator.OR)
             .minimumShouldMatch("1");
     
-        FunctionScoreQueryBuilder functionScoreQueryBuilder = new FunctionScoreQueryBuilder(QueryBuilders.constantScoreQuery(queryBuilder));
+        FunctionScoreQueryBuilder functionScoreQueryBuilder
+            = new FunctionScoreQueryBuilder(QueryBuilders.constantScoreQuery(queryBuilder));
+			
         for (String term : termSet) {
             // 2) 对于完全匹配Term的加1分
             functionScoreQueryBuilder.add(QueryBuilders.termQuery("keyword.keyword_lowercase", term.toLowerCase()),
@@ -344,10 +335,11 @@ link_title: search_recommendation_implemention_based_elasticsearch
     }
 ```
 
-4. 在实际运行的统计来看，有90%以上的查询都能在1.3)的情况下返回推荐词，而这一部分还没有进行拼写纠错和conversion_index索引的检查，因此还是比较高效的；剩下的10%在最坏的情况且缓存都没有命中的情况下，最多还需要进行三次ES的查询，性能是比较差的，但是由于有缓存而且大部分的无结果的关键词都比较集中，因此也在可接受的范围，这一块可以考虑再增加一个动态参数，在大促的时候进行关闭处理；
+最后，从实际运行的统计来看，有90%以上的查询都能在1.3)的情况下返回推荐词，而这一部分还没有进行拼写纠错和conversion_index索引的查询，因此还是比较高效的；剩下的10%在最坏的情况且缓存都没有命中的情况下，最多还需要进行三次ES的查询，性能是比较差的，但是由于有缓存而且大部分的无结果的关键词都比较集中，因此也在可接受的范围，这一块可以考虑再增加一个动态参数，在大促的时候进行关闭处理。
 
 # 小结与后续改进
 - 通过以上的设计和实现，我们实现了一个效果不错的搜索推荐功能，线上使用效果如下：
+
 
     //搜索【迪奥】，本站无该品牌商品
     没有找到 "迪奥" 相关的商品， 为您推荐 "香水" 的搜索结果。或者试试 "香氛"  "眼镜" 
@@ -364,4 +356,4 @@ link_title: search_recommendation_implemention_based_elasticsearch
 	//搜索【blackjauk】，拼写错误
 	没有找到 "blackjauk" 相关的商品， 为您推荐 "BLACKJACK" 的搜索结果。或者试试 "BLACKJACK T恤"  "BLACKJACK 休闲裤" 
 
-- 后续考虑的改进包括：1.继续统计各种无结果或结果太少场景出现的频率和对应推荐词的实现，优化搜索推荐服务的效率；2.爬取更多的语料资源，提升conversion的能力；3.考虑增加个性化的功能，给用户推荐Ta最感兴趣的内容；
+- 后续考虑的改进包括：1.继续统计各种无结果或结果太少场景出现的频率和对应推荐词的实现，优化搜索推荐服务的效率；2.爬取更多的语料资源，提升conversion的能力；3.考虑增加个性化的功能，给用户推荐Ta最感兴趣的内容。
