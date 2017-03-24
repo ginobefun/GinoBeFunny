@@ -6,7 +6,7 @@ categories: Elasticsearch
 link_title: search_recommendation_implemention_based_elasticsearch
 ---
 
-在[基于Elasticsearch实现搜索建议](http://ginobefunny.com/post/search_suggestion_implemention_based_elasticsearch/)一文中我们曾经介绍过如何基于Elasticsearch来实现搜索建议，而本文是在此基于上进一步优化搜索体验，在当搜索无结果或结果过少时提供推荐搜索词给用户。
+在[基于Elasticsearch实现搜索建议](http://ginobefunny.com/post/search_suggestion_implemention_based_elasticsearch/)一文中我们曾经介绍过如何基于Elasticsearch来实现搜索建议，而本文是在此基础上进一步优化搜索体验，在当搜索无结果或结果过少时提供推荐搜索词给用户。
 
 <!-- more -->
 
@@ -356,4 +356,4 @@ link_title: search_recommendation_implemention_based_elasticsearch
 	//搜索【blackjauk】，拼写错误
 	没有找到 "blackjauk" 相关的商品， 为您推荐 "BLACKJACK" 的搜索结果。或者试试 "BLACKJACK T恤"  "BLACKJACK 休闲裤" 
 
-- 后续考虑的改进包括：1.继续统计各种无结果或结果太少场景出现的频率和对应推荐词的实现，优化搜索推荐服务的效率；2.爬取更多的语料资源，提升conversion的能力；3.考虑增加个性化的功能，给用户推荐Ta最感兴趣的内容。
+- 后续考虑的改进包括：1.继续统计各种无结果或结果太少场景出现的频率和对应推荐词的实现，优化搜索推荐服务的效率；2.爬取更多的语料资源，提升Conversion的准确性；3.考虑增加个性化的功能，给用户推荐Ta最感兴趣的内容。
