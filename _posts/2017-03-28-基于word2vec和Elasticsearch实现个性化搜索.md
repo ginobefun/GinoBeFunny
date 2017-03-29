@@ -30,7 +30,7 @@ link_title: personalized_search_implemention_based_word2vec_and_elasticsearch
 
 # 实现细节
 ## 商品向量的计算
-1. 根据用户最近某段时间（如30天内）的浏览记录，获取得到浏览SKN的列表并使用空格分隔；核心的逻辑如下面的SQL所示：
+- 根据用户最近某段时间（如30天内）的浏览记录，获取得到浏览SKN的列表并使用空格分隔；核心的逻辑如下面的SQL所示：
 
 
     select concat_ws(' ', collect_set(product_skn)) as skns 
@@ -41,17 +41,17 @@ link_title: personalized_search_implemention_based_word2vec_and_elasticsearch
       order by uid, click_time_stamp) as a 
     group by uid;
 
-2. 将该SQL的执行结果写入文件作为word2vec训练的输入；
-3. 调用word2vec执行训练，并保存训练的结果：
+- 将该SQL的执行结果写入文件作为word2vec训练的输入；
+- 调用word2vec执行训练，并保存训练的结果：
 
 
     time ./word2vec -train $prepare_file -output $result_file -cbow 1 -size 20 
     -window 8 -negative 25 -hs 0 -sample 1e-4 -threads 20 -iter 15 
 
-4. 读取训练结果的向量，保存到搜索库的商品向量表。
+- 读取训练结果的向量，保存到搜索库的商品向量表。
 
 ## 用户向量的计算
-1. 在计算用户向量时采用了一种简化的处理，即通过用户最近某段时间（如30天内）的商品浏览记录，根据这些商品的向量进行每一维的求平均值处理来计算用户向量，核心的逻辑如下：
+- 在计算用户向量时采用了一种简化的处理，即通过用户最近某段时间（如30天内）的商品浏览记录，根据这些商品的向量进行每一维的求平均值处理来计算用户向量，核心的逻辑如下：
 
 
     vec_list = []
@@ -68,11 +68,11 @@ link_title: personalized_search_implemention_based_word2vec_and_elasticsearch
     on a.product_skn = b.product_skn
     group by a.uid;
 
-2. 将计算获取的用户向量，保存到Redis里供搜索服务获取。
+- 将计算获取的用户向量，保存到Redis里供搜索服务获取。
 
 ## 搜索服务时增加个性化评分
-1. 商品索引重建构造器在重建索引时设置商品向量到product_index的某个字段中，比如下面例子的productFeatureVector字段；
-2. 搜索服务在默认的cross_fields相关性评分的机制下，需要增加个性化的评分，这个可以通过**function_score**来实现。
+- 商品索引重建构造器在重建索引时设置商品向量到product_index的某个字段中，比如下面例子的productFeatureVector字段；
+- 搜索服务在默认的cross_fields相关性评分的机制下，需要增加个性化的评分，这个可以通过**function_score**来实现。
 
 ```java
 Map<String, Object> scriptParams = new HashMap<>();
@@ -83,8 +83,8 @@ Script script = new Script("feature_vector_scoring_script", ScriptService.Script
 functionScoreQueryBuilder.add(ScoreFunctionBuilders.scriptFunction(script));
 ```
 
-3. 这里采用了[elasticsearch-feature-vector-scoring插件](https://github.com/ginobefun/elasticsearch-feature-vector-scoring)来进行相关性评分，其核心是向量的余弦距离表示，具体见下面一小节的介绍。在脚本参数中，field表示索引中保存商品特征向量的字段；inputFeatureVector表示输入的向量，在这里为用户的向量；
-4. 这里把version参数单独拿出来解释一下，因为每天计算出来的向量是不一样的，向量的每一维并没有对应商品的某个具体的属性（至少我们现在看不出来这种关联），因此我们要特别避免不同时间计算出来的向量的之间计算相关性。在实现的时候，我们是通过一个中间变量来表示最新的版本，即在完成商品向量和用户向量的计算和推送给搜索之后，再更新这个中间向量；搜索的索引构造器定期轮询这个中间变量，当发现发生更新之后，就将商品的特征向量批量更新到ES中，在后面的搜索中就可以采用新版本的向量了；
+- 这里采用了[elasticsearch-feature-vector-scoring插件](https://github.com/ginobefun/elasticsearch-feature-vector-scoring)来进行相关性评分，其核心是向量的余弦距离表示，具体见下面一小节的介绍。在脚本参数中，field表示索引中保存商品特征向量的字段；inputFeatureVector表示输入的向量，在这里为用户的向量；
+- 这里把version参数单独拿出来解释一下，因为每天计算出来的向量是不一样的，向量的每一维并没有对应商品的某个具体的属性（至少我们现在看不出来这种关联），因此我们要特别避免不同时间计算出来的向量的之间计算相关性。在实现的时候，我们是通过一个中间变量来表示最新的版本，即在完成商品向量和用户向量的计算和推送给搜索之后，再更新这个中间向量；搜索的索引构造器定期轮询这个中间变量，当发现发生更新之后，就将商品的特征向量批量更新到ES中，在后面的搜索中就可以采用新版本的向量了；
 
 ## elasticsearch-feature-vector-scoring插件
 这是我自己写的一个插件，具体的使用可以看下[项目主页](https://github.com/ginobefun/elasticsearch-feature-vector-scoring)，其核心也就一个类，我将其主要的代码和注释贴一下：
