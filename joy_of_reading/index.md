@@ -28,6 +28,10 @@ date: 2017-02-07 09:12:56
 2. 因为公司的技术栈里采用了RabbitMQ才去了解这个是要ErLang开发的分布式队列，这本书的重点还是在介绍AMQP、集群和管理上面，对于RabbitMQ本身是如何实现的涉及很少，这是一个遗憾；
 3. 我个人还是倾向于使用后端核心语言Java实现的队列服务，如Kafka和RocketMQ等，这样可以更加自如地扩展和学习。
 
+**读书笔记**
+
+[AMQP学习小记](http://ginobefunny.com/post/learning_amqp/)
+
 ## B12 《Spark核心技术与高级应用》
 
 ![Spark核心技术与高级应用](https://img1.doubanio.com/lpic/s28784667.jpg)
