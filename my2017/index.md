@@ -167,24 +167,25 @@ Java并发和Netty相关知识小结比预期的要花费更多时间，本月�
 
 # 4月份目标
 
-4月份的学习包括三条主线，一是以搜索为核心，学习Lucene、学习ES 5.X版本新特性，二是以学习基础算法为核心，三是学习Spark的基础知识和运用，具体包括：
+4月份的学习包括三条主线，一是以搜索为核心，学习Lucene、学习ES 5.X版本新特性，二是学习Spark的基础知识和运用，具体包括：
 
-- 【3h】阅读Lucene Core官方文档，完成Quick Start，了解Lucene的基础功能和架构；
-- 【10h】阅读[《Lucene原理与代码分析》](http://www.cnblogs.com/forfuture1978/archive/2010/06/13/1757479.html)；
+- 【3h】将elasticsearch-feature-vector-scoring、elasticsearch-dynamic-synonym、elasticsearch-analysis-ik(fork)升级到支持ES 5.X；
+- 【5h】阅读Lucene Core官方文档，完成Quick Start，了解Lucene的基础功能和架构；
+- 【5h】阅读[《Lucene原理与代码分析》](http://www.cnblogs.com/forfuture1978/archive/2010/06/13/1757479.html)；
 - 【2h】泛读《这就是搜索引擎》；
-- 【8h】阅读《数据结构与算法分析 : Java语言描述》；
-- 【4h】阅读《算法笔记》；
+- 【2h】阅读Spark官方文档，完成Quick Start，了解Spark的基础功能和架构；
 - 【5h】阅读《Spark大数据分析实战》；
 - 【10h】博客写作：Spark简明教程等；
-- 【2h】阅读《特斯拉之父》；
-- 【4h】阅读《浪潮之巅》；
-- 【2h】学习日志框架logback；
+- 【3h】阅读《特斯拉之父》；
+- 【5h】阅读《浪潮之巅》；
+- 【5h】学习日志框架logback；
 - 【10h】阅读随手记30篇；
+- 【5h】阅读《尽在双11》；
 
 对应的周期任务说明：
-- 三本技术类图书：《这就是搜索引擎》、《数据结构与算法分析:  Java语言描述》、《算法笔记》、《Spark大数据分析实战》；
+- 三本技术类图书：《这就是搜索引擎》、《尽在双11》、《Spark大数据分析实战》；
 - 两本非技术类图书：《特斯拉之父》、《浪潮之巅》；
-- 每周原创博文安排：logback简明教程、Lucene核心原理解析、算法学习小记、Spark简明教程；
+- 每周原创博文安排：《尽在双11》读书心得、logback简明教程、Spark简明教程、ES 5.X升级笔记；
 - 每两周学习一个开源项目：logback和Spark；
 
 # 4月份进展
