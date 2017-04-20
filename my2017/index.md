@@ -167,7 +167,7 @@ Java并发和Netty相关知识小结比预期的要花费更多时间，本月�
 
 # 4月份目标
 
-4月份的学习包括三条主线，一是以搜索为核心，学习Lucene、学习ES 5.X版本新特性，二是学习Spark的基础知识和运用，具体包括：
+4月份的学习包括两条主线，一是以搜索为核心，学习Lucene、学习ES 5.X版本新特性，二是学习Spark的基础知识和运用，具体包括：
 
 - 【3h】将elasticsearch-feature-vector-scoring、elasticsearch-dynamic-synonym、elasticsearch-analysis-ik(fork)升级到支持ES 5.X；
 - 【5h】阅读Lucene Core官方文档，完成Quick Start，了解Lucene的基础功能和架构；
@@ -187,6 +187,24 @@ Java并发和Netty相关知识小结比预期的要花费更多时间，本月�
 - 两本非技术类图书：《特斯拉之父》、《浪潮之巅》；
 - 每周原创博文安排：《尽在双11》读书心得、logback简明教程、Spark简明教程、ES 5.X升级笔记；
 - 每两周学习一个开源项目：logback和Spark；
+
+## 4月份目标调整（20170420）
+**调整说明**
+替换第二条主线，将更多的时间用于阅读，开源项目的学习移到下个月开始。
+
+- 【3h】将elasticsearch-feature-vector-scoring、elasticsearch-dynamic-synonym、elasticsearch-analysis-ik(fork)升级到支持ES 5.X；
+- 【5h】阅读Lucene Core官方文档，完成Quick Start，了解Lucene的基础功能和架构；
+- 【5h】阅读[《Lucene原理与代码分析》](http://www.cnblogs.com/forfuture1978/archive/2010/06/13/1757479.html)；
+- 【2h】泛读《这就是搜索引擎》；
+- 【3h】阅读《特斯拉之父》；
+- 【5h】阅读《浪潮之巅》；
+- 【10h】阅读随手记30篇；
+- 【5h】阅读《尽在双11》；
+- 【5h】阅读《亿级流量网站架构核心技术》；
+- 【2h】阅读《学习正则表达式》；
+- 【3h】泛读《自制搜索引擎》；
+- 【3h】泛读《Spring Boot实战》；
+- 【9h】阅读《QCON 2017 PPT合集》；
 
 # 4月份进展
 //还没轮到我呢...
