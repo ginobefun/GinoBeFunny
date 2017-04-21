@@ -195,16 +195,15 @@ Java并发和Netty相关知识小结比预期的要花费更多时间，本月�
 - 【3h】将elasticsearch-feature-vector-scoring、elasticsearch-dynamic-synonym、elasticsearch-analysis-ik(fork)升级到支持ES 5.X；
 - 【5h】阅读Lucene Core官方文档，完成Quick Start，了解Lucene的基础功能和架构；
 - 【5h】阅读[《Lucene原理与代码分析》](http://www.cnblogs.com/forfuture1978/archive/2010/06/13/1757479.html)；
-- 【2h】泛读《这就是搜索引擎》；
-- 【3h】阅读《特斯拉之父》；
+- 【2h】阅读《特斯拉之父》；
 - 【5h】阅读《浪潮之巅》；
 - 【10h】阅读随手记30篇；
 - 【5h】阅读《尽在双11》；
 - 【5h】阅读《亿级流量网站架构核心技术》；
-- 【2h】阅读《学习正则表达式》；
+- 【3h】阅读《学习正则表达式》；
 - 【3h】泛读《自制搜索引擎》；
-- 【3h】泛读《Spring Boot实战》；
-- 【9h】阅读《QCON 2017 PPT合集》；
+- 【4h】泛读《Spring Boot实战》；
+- 【10h】阅读《QCON 2017 PPT合集》；
 
 # 4月份进展
 //还没轮到我呢...
