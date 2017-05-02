@@ -206,10 +206,42 @@ Java并发和Netty相关知识小结比预期的要花费更多时间，本月�
 - 【10h】阅读《QCON 2017 PPT合集》；
 
 # 4月份进展
-//还没轮到我呢...
+## 完成的
+- ~~将elasticsearch-feature-vector-scoring、elasticsearch-dynamic-synonym、elasticsearch-analysis-ik(fork)升级到支持ES 5.X；~~
+- ~~阅读Lucene Core官方文档，完成Quick Start，了解Lucene的基础功能和架构；~~
+- ~~阅读[《Lucene原理与代码分析》](http://www.cnblogs.com/forfuture1978/archive/2010/06/13/1757479.html)；~~
+- ~~阅读《特斯拉之父》；~~
+- ~~阅读《浪潮之巅》；~~
+- ~~阅读随手记30篇；~~
+- ~~阅读《尽在双11》；~~
+- ~~阅读《亿级流量网站架构核心技术》；~~
+- ~~阅读《学习正则表达式》；~~
+- ~~泛读《自制搜索引擎》；~~
+- ~~泛读《Spring Boot实战》；~~
+- ~~阅读《QCON 2017 PPT合集》；~~
+
+## 简要小结
+- 每年的4月过敏得厉害，所以刻意减少了面对电脑屏幕的时间，在年度计划里，会把4月份和8月份的安排减少，去学习一下非技术相关的东西；
+- 以后每月的安排还是要尽量主线明确，这样可以更专注一下，学习更深入；
+
+## 更新年度计划
+更新原因：
+1. 在项目实践里去除了很多自研中间件和开发框架的任务，而是通过一个side project来锻炼这些知识，采用优秀的开源项目；
+2. 这个side project是我很久想做的事情，涉及到全栈，希望自己能坚持完成；
+
+![年度小目标V20170502](http://oi46mo3on.bkt.clouddn.com/plan_for_2017_v6_2.png)
 
 # 5月份目标
-//还没轮到我呢...
+5月份的学习包括两条主线，一是以Linux为核心，学习Linux的基础知识和shell命令，二是side project为核心，学习Web前端和Spring cloud相关工程，具体包括：
+
+- 【10h】阅读《循序渐进Linux》；
+- 【6h】阅读《Linux程序设计》；
+- 【10h】阅读[Spring Cloud Projects](http://projects.spring.io/spring-cloud/)，特别是服务注册发现、配置管理以及Netflix里面的相关工程；
+- 【4h】阅读《深入理解Bootstrap》和[Bootstrap官方文档](http://v3.bootcss.com/)；
+- 【3h】阅读《硅谷之谜》；
+- 【3h】阅读《刻意练习：如何从新手到大师》；
+- 【10h】阅读随手记30篇博文；
+- 【14h】zhangda.la首页设计和动态发布功能开发；
 
 # 5月份进展
 //还没轮到我呢...
