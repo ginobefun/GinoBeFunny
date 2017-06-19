@@ -14,11 +14,14 @@ date: 2016-12-22 09:10:25
 - 2004.9 ~ 2008.7   南昌大学  机械设计制造及其自动化
 
 ### 联系方式
+**由于多说系统关闭，不想折腾文章评论功能了，欢迎大家通过以下方式和我联系。**
+
 - github: [ginobefun](https://github.com/ginobefun/)
 - 微博：[ginobefun](http://weibo.com/iscrazyguy/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1)
-- 微信：xingxing174556571
 - 知乎：[GinoBeFunny](https://www.zhihu.com/people/ginobefun/activities)
 - Email: ginobefun@163.com
+- QQ：174556571
+- 微信：xingxing174556571
 - 微信公众号：GinoBeFunny
 
 ![微信公众号_GinoBeFunny](http://oi46mo3on.bkt.clouddn.com/wechat.jpg)
