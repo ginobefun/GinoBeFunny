@@ -5,7 +5,8 @@ date: 2016-12-22 09:10:25
 ![关于我](http://oi46mo3on.bkt.clouddn.com/gino_in_bj.JPG)
 
 ### 工作经历
-- 2016.6 至今：       YOHO!BUY 搜索
+- 2017.7 至今         阿里CCO RDC
+- 2016.6 ~ 2017.7     YOHO!BUY 搜索
 - 2013.10 ~ 2016.6    华为RM RMDK
 - 2011.4  ~ 2013.10   华为CBS BM
 
